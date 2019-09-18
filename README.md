@@ -6,12 +6,30 @@
  1인 가구가 늘어가고 좀 더 나은 여가생활을 보내고자 하는 사람들의 수요가 늘어나서 비공개 모임 프로젝트를 만들어 봤습니다.
  카카오 로그인과 구글 맵을 사용했고, mvc패턴을 적용한 톰켓기반 스프링 서버를 만들어 봤습니다.
 
- 안드로이드의 경우 
+- 안드로이드
+
+1. 
+
+사용을 원하실 경우 각각 카카오와 구글에 등록이 필요합니다.
+
+https://re-build.tistory.com/9 -카카오
+https://webnautes.tistory.com/647 - 구글맵
+
+그레이들의 설정은 다 되어있으니 Manifest안의 meta 데이터 값만 수정하시면 됩니다.
+
+2. 
+
+그리고 각각의 activity 안에 서버와 통신을 위한 URL 값들을 본인 값으로 수정해 주시면 되는데,
+
+예를들어 Project_4T_ToPle_V_1_0_2/app/src/main/java/com/example/project_4t_tople/activity/AdminActivity.java 해당 경로를 보시면,
+
+![url](https://user-images.githubusercontent.com/53204149/65139182-28969080-da47-11e9-8948-e5871b106e08.png)
+
+위와 같이 url 값이 있는데 해당 정보를 본인의 값으로 수정해 주시면 됩니다.
 
 
 
-
-집에서 서버 사용하기
+- 서버 사용하기
 
 
 1.	workspace 경로 복사하기
@@ -51,7 +69,9 @@
 
 7. SqlDeveloper 에서 테이블 생성 및 확인
 
+아래 경로에 sql 코드가 있습니다.
 
+moim.4t.spring/src/main/resources/sql/android_project.sql
 
 8. test.jsp 실행 확인
  
