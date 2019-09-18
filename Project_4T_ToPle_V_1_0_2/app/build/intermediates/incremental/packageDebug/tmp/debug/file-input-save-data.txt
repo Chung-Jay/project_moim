@@ -1,0 +1,7 @@
+#Internal package file, do not edit.
+#Sat Sep 14 03:17:32 KST 2019
+0.baseType=DIRECTORY
+0.base=C\:\\JavaStudy\\project\\projectCode\\Project_4T_ToPle_V_1_0_2\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out
+0.path=classes.dex
+0.set=DEX
+count=1
