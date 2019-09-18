@@ -1,195 +1,264 @@
+-- ì‹œí€€ìŠ¤ ìƒì„±
+    -- ëª¨ì„ ì½”ë“œ
+create sequence moim_seq nocache nocycle;
+drop sequence moim_seq;
+    -- ê¸€ ë²ˆí˜¸
+create sequence board_seq nocache nocycle;
+drop sequence board_seq;
+    -- ë§ê¸€ ë²ˆí˜¸
+create sequence re_seq nocache nocycle;
+drop sequence re_seq;
+    -- ì¼ì • ì½”ë“œ
+create sequence sche_seq nocache nocycle;
+drop sequence sche_seq;
 
--- »ç¿ëÀÚ Å×ÀÌºí
+commit;
+
+------------------------------------------------------
+-- ì‚¬ìš©ì ì •ë³´ í…Œì´ë¸”
 create table moim_user (
-    id varchar2(50) primary key,    -- ¾ÆÀÌµğ
-    moim varchar2(2000),            -- Âü¿© ¸ğÀÓ
-    fav varchar2(2000)              -- Áñ°ÜÃ£±â ¸ğÀÓ
-    
-    -- Å×½ºÆ®¿ë ¼Ó¼º
-    ,
-    name varchar2(100),     -- ÀÌ¸§
-    gender varchar2(50),    -- ¼ºº°
-    birth varchar2(100),    -- »ı³â¿ùÀÏ
-    loca varchar2(100),     -- °ÅÁÖÁö¿ª
-    prof varchar2(1000),    -- ÀÚ±â¼Ò°³
-    thumb varchar2(500)     -- ÇÁ·ÎÇÊ»çÁø
+    user_id varchar2(4000) primary key,    -- ì•„ì´ë””
+    user_img varchar2(4000)                -- ë³€ê²½ëœ í”„ë¡œí•„ ì‚¬ì§„
 );
--- ÀÔ·Â Äõ¸®
+
 insert into moim_user values(
-'asdf', 
-'', 
-'', 
-'È«±æµ¿', 
-'³²', 
-'1990-08-08', 
-'°æ±âµµ', 
-'µµ»ç', 
+'1153817244', 
 'hong.jpg');
 
 select * from moim_user;
 
+select * from moim_user where user_id = '1150321350';
 
--- ¸ğÀÓ ¸â¹ö
+drop table moim_user purge;
+
+commit;
+
+
+-----------------ëª¨ì„ ìƒì„±---------------------------
+-- ë§ˆì§€ë§‰ìœ¼ë¡œ ìƒì„±ëœ ëª¨ì„ ì´ë¦„ ì–»ê¸°
+select max(tname) as tname from tab 
+where tname like upper('zz%');
+
+-- ëª¨ì„ í…Œì´ë¸” ìƒì„±
+create table zz10000 (
+    moimcode number primary key,    -- ëª¨ì„ ì½”ë“œ
+    loca varchar2(100),             -- ìœ„ì¹˜
+    moimname varchar2(1000),        -- ëª¨ì„ëª…
+    prod varchar2(4000),            -- ëª¨ì„ì†Œê°œ
+    pic varchar2(500),              -- ì‚¬ì§„ íŒŒì¼ëª…
+    color varchar2(100)             -- ìƒ‰ìƒ
+);
+
+insert into zz10000 values(
+moim_seq.nextval,
+'ê°•ì›ë„',
+'ì •ë™ì§„ í•´ë‹ì´',
+'ì •ë™ì§„ í•´ë‹ì´ ë³´ë©´ì„œ ê³ ê¸° ë¨¹ì',
+'banner.jpg',
+'wine'
+);
+
+select * from zz10039;
+
+-- ëª¨ì„ ì •ë³´ ë° ê°€ì… ì¸ì›ìˆ˜
+select zz10000.*, 
+(select count(id) from moimmem where moimcode = zz10000.moimcode) 
+as count 
+from zz10000;
+
+select tname from tab;
+drop table zz114 purge;
+
+commit;
+
+
+------------------------------------------------------
+-- ëª¨ì„ ë©¤ë²„
 create table moimmem (
-    id varchar2(50) not null,       -- »ç¿ëÀÚ ¾ÆÀÌµğ
-    moimcode number not null,       -- ¸ğÀÓ ÄÚµå
-    permit number                   -- ¸ğÀÓ¿¡¼­ÀÇ ±ÇÇÑ·¹º§
+    id varchar2(50) not null,       -- ì‚¬ìš©ì ì•„ì´ë””
+    moimcode number not null,       -- ëª¨ì„ ì½”ë“œ
+    fav varchar2(10) not null,      -- ì¢‹ì•„ìš” ì—¬ë¶€(true OR false)
+    permit number                   -- ëª¨ì„ì—ì„œì˜ ê¶Œí•œë ˆë²¨
 );
--- ÀÔ·Â Äõ¸®
+
+-- ì…ë ¥ ì¿¼ë¦¬
 insert into moimmem values(
-'asdf', 
-1, 
+'1156076264', 
+28, 
+'true',
 3);
-select * from moimmem;
+
+select * from moimmem where moimcode=28;
+
+select * from moimmem where id='1149515249';
+
+delete from moimmem where id='1146095951' and moimcode = 3;
+
+drop table moimmem purge;
+
+commit;
+rollback;
 
 
--- °Ô½ÃÆÇ Å×ÀÌºí
-create table boardlist(
-    listnum number primary key,     -- °Ô½Ã±Û ¹øÈ£
-    id varchar2(50) not null,       -- ÀÛ¼ºÀÚ ¾ÆÀÌµğ
-    moimcode number not null,       -- ±ÛÀÌ ÀÛ¼ºµÈ ¸ğÀÓ ÄÚµå
-    subject varchar2(500),          -- Á¦¸ñ
-    content varchar2(4000),         -- ³»¿ë
-    filename varchar2(4000),        -- ÀúÀåµÈ »çÁø ÀÌ¸§
-    thumb varchar2(4000),           -- »çÁøÀÇ ½æ³×ÀÏ ÀÌ¸§
-    editdate date not null,         -- ÀÛ¼º/¼öÁ¤µÈ ³¯Â¥
-    lev number not null             -- °øÁö µîÀÇ ºĞ·ù ¹øÈ£(·¹º§)
+-----------------------------------------------------
+-- ëª¨ì„ í…Œì´ë¸” ì´ë¦„ í…Œì´ë¸”
+create table moimtname (
+    moimcode number not null,        -- ëª¨ì„ ì½”ë“œ
+    tname varchar2(50) not null      -- í…Œì´ë¸” ì´ë¦„
 );
--- ÀÔ·Â Äõ¸®
+
+insert into moimtname values(
+    1,
+    'zz10000'
+);
+
+select * from moimtname;
+
+drop table moimtname purge;
+
+
+----------------------------------------------------
+-- ê²Œì‹œíŒ í…Œì´ë¸”
+create table boardlist(
+    listnum number primary key,     -- ê²Œì‹œê¸€ ë²ˆí˜¸
+    id varchar2(50) not null,       -- ì‘ì„±ì ì•„ì´ë””
+    moimcode number not null,       -- ê¸€ì´ ì‘ì„±ëœ ëª¨ì„ ì½”ë“œ
+    subject varchar2(500),          -- ì œëª©
+    content varchar2(4000),         -- ë‚´ìš©
+    filename varchar2(4000),        -- ì €ì¥ëœ ì‚¬ì§„ ì´ë¦„
+    thumb varchar2(4000),           -- ì‚¬ì§„ì˜ ì¸ë„¤ì¼ ì´ë¦„
+    editdate date not null,         -- ì‘ì„±/ìˆ˜ì •ëœ ë‚ ì§œ
+    lev number not null             -- ê³µì§€ ë“±ì˜ ë¶„ë¥˜ ë²ˆí˜¸(ë ˆë²¨)
+);
+
+-- ì…ë ¥ ì¿¼ë¦¬
 insert into boardlist values(
 board_seq.nextval,
-'asdf',
-1,
-'±Û Á¦¸ñ',
-'±Û ³»¿ë',
+'1153908310',
+3,
+'ê¸€ ì¼ë°˜',
+'ê¸€ ë‚´ìš©',
 'board_pic.jpg',
 'board_thumb.jpg',
 sysdate,
 2
 );
+
 select * from boardlist;
 
+drop table boardlist purge;
+commit;
 
--- µ¡±Û Å×ÀÌºí
+
+------------------------------------------------------------
+-- ë§ê¸€ í…Œì´ë¸”
 create table redat(
-    renum number primary key,       -- ´ä±Û ¹øÈ£
-    listnum number not null,        -- ¿ø±Û ¹øÈ£
-    id varchar2(50),                -- ÀÛ¼ºÀÚ ¾ÆÀÌµğ
-    moimcode number not null,       -- ÀÛ¼ºµÈ ¸ğÀÓ ÄÚµå
-    reple varchar2(4000),           -- ³»¿ë
-    redate date not null            -- ´ä±Û »ı¼º ³¯Â¥
+    renum number primary key,       -- ë‹µê¸€ ë²ˆí˜¸
+    listnum number not null,        -- ì›ê¸€ ë²ˆí˜¸
+    id varchar2(50),                -- ì‘ì„±ì ì•„ì´ë””
+    moimcode number not null,       -- ì‘ì„±ëœ ëª¨ì„ ì½”ë“œ
+    reple varchar2(4000),           -- ë‚´ìš©
+    redate date not null            -- ë‹µê¸€ ìƒì„± ë‚ ì§œ
 );
--- ÀÔ·Â Äõ¸®
+
+-- ì…ë ¥ ì¿¼ë¦¬
 insert into redat values(
 re_seq.nextval,
 1,
-'asdf',
+'1153908310',
 1,
-'µ¡ ±Û',
+'ë§ ê¸€',
 sysdate
 );
-select * from redat;
+
+select * from redat order by renum desc;
+
+drop table redat purge;
+commit;
 
 
--- ÀÏÁ¤ Å×ÀÌºí
+-------------------------------------------------------------
+-- ì¼ì • í…Œì´ë¸”
 create table schedule (
-    schnum number primary key,      -- ÀÏÁ¤ÄÚµå
-    moimcode number not null,       -- ÀÏÁ¤ÀÌ µî·ÏµÈ ¸ğÀÓ ÄÚµå
-    day varchar2(100) not null,     -- ³â-¿ù-ÀÏ0
-    time varchar2(100) not null,    -- ½Ã:ºĞ:ÃÊ
-    title varchar2(500),            -- ÀÏÁ¤¸íÄª(Á¦¸ñ)
-    sub varchar2(4000),             -- ÀÏÁ¤ ³»¿ë
-    join varchar2(4000),            -- Âü°¡ÀÚ ¸í´Ü
-    lat number,                     -- À§µµ
-    lot number                      -- °æµµ
+    sch_schnum number primary key,      -- ì¼ì •ì½”ë“œ
+    sch_moimcode number not null,       -- ì¼ì •ì´ ë“±ë¡ëœ ëª¨ì„ ì½”ë“œ
+    sch_year varchar2(100) not null,    -- ë…„-ì›”-ì¼0
+    sch_month varchar2(100) not null,   -- ë…„-ì›”-ì¼0
+    sch_day varchar2(100) not null,     -- ë…„-ì›”-ì¼0
+    sch_time varchar2(100) not null,    -- ì‹œ
+    sch_title varchar2(500),            -- ì¼ì •ëª…ì¹­(ì œëª©)
+    sch_sub varchar2(4000),             -- ì¼ì • ë‚´ìš©
+    sch_amount varchar2(4000),          -- íšŒë¹„
+    sch_lat number,                     -- ìœ„ë„
+    sch_lot number                      -- ê²½ë„
 );
--- ÀÔ·Â Äõ¸®
+
+
+-- ì…ë ¥ ì¿¼ë¦¬
 insert into schedule values(
 sche_seq.nextval,
-1,
-'2019-08-12',
-'18:50:01',
-'8¿ù Á¤¸ğ',
-'¸ğÀÓÀº ÀÌÁ¨ °öÃ¢ ÀÔ´Ï´Ù.',
-'asdf,qwer,zxcv',
+19,
+'2019',
+'08',
+'30',
+'18:45',
+'8ì›” ì •ëª¨',
+'ëª¨ì„ì€ ì´ì   ê³±ì°½ ì…ë‹ˆë‹¤.',
+'50000',
 36.1234,
 125.512
 );
+
 select * from schedule;
 
+select * from schedule where sch_schnum = 24;
 
--- ÇÒÀÏ Å×ÀÌºí
-create table todo (
-    schnum number not null,         -- ÀÏÁ¤ ÄÚµå
-    id varchar2(50) not null,       -- Âü¿©ÀÚ(»ç¿ëÀÚ) ¾ÆÀÌµğ
-    ex varchar2(500) not null,      -- ÇÒ ÀÏ
-    flag varchar2(100)              -- ¼öÇà ¿©ºÎ ( true ¶Ç´Â false )
+select * from schedule where sch_moimcode = 3
+order by sch_year, sch_month, sch_day, to_timestamp(sch_time, 'hh24:mi');
+
+delete from schedule where sch_schnum=24;
+
+drop table schedule purge;
+
+commit;
+
+create table schemem (
+    schnum number not null,         -- ì¼ì • ì½”ë“œ
+    id varchar2(4000) not null,     -- ì‚¬ìš©ì id
+    todo varchar2(4000),            -- í•  ì¼
+    ex varchar2(4000),              -- í•  ì¼ ìƒì„¸
+    isdo varchar2(4000),            -- ìˆ˜í–‰ ì—¬ë¶€
+    amount varchar2(4000),          -- íšŒë¹„
+    ispay varchar2(4000)            -- íšŒë¹„ ê²°ì œ ì—¬ë¶€
 );
--- ÀÔ·Â Äõ¸®
-insert into todo values(
-1,
-'asdf',
-'»ï°ã»ì Ã¬±â±â',
-'false'
+
+insert into schemem values(
+    2,
+    '1153908310',
+    'ì‚¼ê²¹ì‚´ ì±™ê¸°ê¸°',
+    'ì‚¼ê²¹ì‚´ ë‘ê·¼ë°˜, ì†Œì£¼ 1ë³‘ ì±™ê¸°ì„¸ìš”',
+    'true',
+    '50000',
+    'true'
 );
-select * from todo;
 
+-- ìˆ˜í–‰ ì—¬ë¶€ ë³€ê²½
+update schemem set isdo = 'false'
+where id = '1153908310' and schnum = 1;
 
--- È¸ºñ Å×ÀÌºí
-create table money (
-    schnum number not null,         -- ÀÏÁ¤ ÄÚµå
-    id varchar2(50) not null,       -- Âü¿©ÀÚ(»ç¿ëÀÚ) ¾ÆÀÌµğ
-    amount varchar2(500) not null,  -- È¸ºñ
-    flag varchar2(100)              -- ³³ÀÔ ¿©ºÎ ( true ¶Ç´Â false )
-);
--- ÀÔ·Â Äõ¸®
-insert into money values(
-1,
-'asdf',
-'30000',
-'false'
-);
-select * from money;
+-- ë‚©ë¶€ ì—¬ë¶€ ë³€ê²½
+update schemem set ispay = 'false'
+where id = '1153908310' and schnum = 1;
 
--- Å×½ºÆ®¿ë ¸ğÀÓ Å×ÀÌºí
-create table zz100 (
-    moimcode number primary key,    -- ¸ğÀÓ ÄÚµå
-    loca varchar2(100),             -- À§Ä¡
-    moimname varchar2(1000),        -- ¸ğÀÓ¸í
-    prod varchar2(4000),            -- ¸ğÀÓ¼Ò°³
-    pic varchar2(500),              -- »çÁø
-    color varchar2(100)             -- »ö»ó
-);
--- ÀÔ·Â Äõ¸®
-insert into zz100 values(
-moim_seq.nextval,
-'°­¿øµµ',
-'Á¤µ¿Áø ÇØµ¸ÀÌ',
-'Á¤µ¿Áø ÇØµ¸ÀÌ º¸¸é¼­ °í±â ¸ÔÀÚ',
-'banner.jpg',
-'#333'
-);
-select * from zz100;
+select * from schemem;
+-- ì¼ì •ì— ì°¸ê°€í•œ ì‚¬ìš©ì ë¦¬ìŠ¤íŠ¸ ì¡°íšŒ
+select id from schemem where schnum = 24;
 
+delete from schemem where schnum = 24;
 
--- ¸¶Áö¸·À¸·Î »ı¼ºµÈ ¸ğÀÓ ÀÌ¸§ ¾ò±â
-select max(tname) as moimtable from tab order by tname desc;
+select * from schemem;
 
--- Å×ÀÌºí »èÁ¦
-drop table a10000 purge;
-
--- ½ÃÄö½º »ı¼º
--- ¸ğÀÓ ÄÚµå
-create sequence moim_seq nocache nocycle;
-
--- ±Û ¹øÈ£
-create sequence board_seq nocache nocycle;
-
--- µ¡±Û ¹øÈ£
-create sequence re_seq nocache nocycle;
-
--- ÀÏÁ¤ ÄÚµå
-create sequence sche_seq nocache nocycle;
+commit;
 
 
 
